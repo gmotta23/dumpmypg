@@ -6,7 +6,7 @@ docker build --no-cache -t dumpmypg .
 
 Install container (first run)
 
-docker run -d --name dumpmypg -p 3000:3000 dumpmypg
+docker run --name dumpmypg -p 3000:3000 dumpmypg
 
 Run container
 

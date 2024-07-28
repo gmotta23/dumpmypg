@@ -2,13 +2,13 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { Credentials, Dumper } from "./dumper";
 
 export type FormState = {
   message?: string | null;
 };
 
 const ConnectionSchema = z.object({
-  id: z.string(),
   host: z.string(),
   port: z.string(),
   database: z.string(),
@@ -16,13 +16,11 @@ const ConnectionSchema = z.object({
   password: z.string(),
 });
 
-const CreateConnectionSchema = ConnectionSchema.omit({ id: true });
-
 export async function createConnection(
   prevState: FormState,
   formData: FormData
 ) {
-  const validatedFields = CreateConnectionSchema.safeParse({
+  const validatedFields = ConnectionSchema.safeParse({
     host: formData.get("host"),
     port: formData.get("port"),
     database: formData.get("database"),
@@ -40,4 +38,8 @@ export async function createConnection(
 
   revalidatePath("/");
   redirect("/");
+}
+
+export async function dump(credentials: Credentials) {
+  new Dumper(credentials, { ssl: true }).dump();
 }
