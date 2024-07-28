@@ -38,6 +38,6 @@ export async function createConnection(
 
   const { host, port, database, user, password } = validatedFields.data;
 
-  revalidatePath("/databases");
-  redirect("/databases");
+  revalidatePath("/");
+  redirect("/");
 }
