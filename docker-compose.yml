@@ -7,4 +7,4 @@ services:
       args:
         COMMAND: dev
     volumes:
-      - ./:/home/node/app
+      - ./:/app

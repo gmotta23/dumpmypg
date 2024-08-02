@@ -5,9 +5,9 @@ ENV COMMAND=$COMMAND
 
 EXPOSE 3000
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+RUN mkdir -p /app/node_modules && chown -R node:node /app
 
-WORKDIR /home/node/app
+WORKDIR /app
 
 RUN apk add postgresql
 
