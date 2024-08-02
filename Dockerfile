@@ -1,5 +1,10 @@
 FROM node:18-alpine
 
+ARG COMMAND=start
+ENV COMMAND=$COMMAND
+
+EXPOSE 3000
+
 RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
 WORKDIR /home/node/app
@@ -12,8 +17,6 @@ COPY --chown=node:node . .
 
 RUN npm install
 
-RUN npm run build
+RUN if [ "$COMMAND" = "start" ] ; then npm run build ; fi
 
-EXPOSE 3000
-
-CMD [ "npm", "run", "start" ]
+CMD sh -c "npm run $COMMAND"

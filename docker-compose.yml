@@ -1,0 +1,10 @@
+services:
+  dumpmypg-dev:
+    ports: 
+    - 3000:3000
+    build:
+      dockerfile: Dockerfile
+      args:
+        COMMAND: dev
+    volumes:
+      - ./:/home/node/app
