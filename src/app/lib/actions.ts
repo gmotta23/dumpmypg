@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { Credentials, Dumper } from "./dumper";
+import { ConnectionStorage } from "./database";
 
 export type FormState = {
   message?: string | null;
@@ -17,7 +18,7 @@ const ConnectionSchema = z.object({
 });
 
 export async function createConnection(
-  prevState: FormState,
+  _prevState: FormState,
   formData: FormData
 ) {
   const validatedFields = ConnectionSchema.safeParse({
@@ -34,7 +35,7 @@ export async function createConnection(
     };
   }
 
-  const { host, port, database, user, password } = validatedFields.data;
+  ConnectionStorage.createConnection(validatedFields.data);
 
   revalidatePath("/");
   redirect("/");

@@ -12,7 +12,10 @@ export default function Form() {
     <form action={formAction}>
       <div className="bg-gray-50 p-4 md:p-6">
         <div className="mb-4 flex items-center">
-          <label htmlFor="host" className="mb-2 text-sm font-medium w-32">
+          <label
+            htmlFor="host"
+            className="text-left mb-2 text-sm font-medium w-32"
+          >
             Host
           </label>
           <input
@@ -24,7 +27,10 @@ export default function Form() {
           />
         </div>
         <div className="mb-4 flex items-center">
-          <label htmlFor="port" className="mb-2 text-sm font-medium w-32">
+          <label
+            htmlFor="port"
+            className="text-left mb-2 text-sm font-medium w-32"
+          >
             Port
           </label>
           <input
@@ -36,7 +42,10 @@ export default function Form() {
           />
         </div>
         <div className="mb-4 flex items-center">
-          <label htmlFor="database" className="mb-2 text-sm font-medium w-32">
+          <label
+            htmlFor="database"
+            className="text-left mb-2 text-sm font-medium w-32"
+          >
             Database
           </label>
           <input
@@ -48,7 +57,10 @@ export default function Form() {
           />
         </div>
         <div className="mb-4 flex items-center">
-          <label htmlFor="user" className="mb-2 text-sm font-medium w-32">
+          <label
+            htmlFor="user"
+            className="text-left mb-2 text-sm font-medium w-32"
+          >
             User
           </label>
           <input
@@ -60,7 +72,10 @@ export default function Form() {
           />
         </div>
         <div className="mb-4 flex items-center">
-          <label htmlFor="password" className="mb-2 text-sm font-medium w-32">
+          <label
+            htmlFor="password"
+            className="text-left mb-2 text-sm font-medium w-32"
+          >
             Password
           </label>
           <input
