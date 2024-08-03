@@ -1,4 +1,3 @@
-"use client";
 import Link from "next/link";
 import { ConnectionList } from "./ui/connections/connection-list";
 import Section from "./ui/display/section";

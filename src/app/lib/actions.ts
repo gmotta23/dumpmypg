@@ -41,6 +41,12 @@ export async function createConnection(
   redirect("/");
 }
 
+export async function getConnections() {
+  return await ConnectionStorage.getConnections().catch((_) => {
+    throw new Error("Failed to fetch connection files.");
+  });
+}
+
 export async function dump(credentials: Credentials) {
   new Dumper(credentials, { ssl: true }).dump();
 }
