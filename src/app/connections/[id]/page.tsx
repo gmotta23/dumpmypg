@@ -10,8 +10,6 @@ export default async function Page({ params }: { params: { id: string } }) {
   const connection = await getConnection(id);
   const connectionDumps = await getConnectionDumps(id);
 
-  console.log(connectionDumps);
-
   return (
     <Section title="Connection">
       <div className="text-center">

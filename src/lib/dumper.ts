@@ -33,29 +33,32 @@ class Dumper {
     return connectionPath;
   }
 
-  dump() {
+  async dump() {
     console.log("starting dump process");
-    const { host, port, database, user, password } = this.credentials;
-    let script = `/usr/bin/pg_dump --dbname=postgresql://${user}:${password}@${host}:${port}/${database}`;
+    await new Promise((resolve) => {
+      const { host, port, database, user, password } = this.credentials;
+      let script = `/usr/bin/pg_dump --dbname=postgresql://${user}:${password}@${host}:${port}/${database}`;
 
-    if (this.ssl) {
-      script += "?sslmode=require";
-    }
+      if (this.ssl) {
+        script += "?sslmode=require";
+      }
 
-    const file = path.join(
-      this.connectionPath,
-      Date.now().toString() + ".dump"
-    );
+      const file = path.join(
+        this.connectionPath,
+        Date.now().toString() + ".dump"
+      );
 
-    const dump = spawn(`${script} -f ${file}`, {
-      shell: true,
-      stdio: ["inherit", "pipe", "pipe"],
-    });
+      const dump = spawn(`${script} -f ${file}`, {
+        shell: true,
+        stdio: ["inherit", "pipe", "pipe"],
+      });
 
-    dump.stderr.on("data", (err) => console.error(err.toString()));
+      dump.stderr.on("data", (err) => console.error(err.toString()));
 
-    dump.on("close", (code) => {
-      console.log(`child process exited with code ${code}`);
+      dump.on("close", (code) => {
+        console.log(`child process exited with code ${code}`);
+        resolve(code);
+      });
     });
   }
 }
