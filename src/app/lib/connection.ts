@@ -56,8 +56,6 @@ class ConnectionStorage {
     return connection;
   }
 
-  static deleteConnection(connectionId: string) {}
-
   static async getConnectionDumps(connectionId: string) {
     const connectionPath = path.join(process.cwd(), "data", connectionId);
 
@@ -68,9 +66,20 @@ class ConnectionStorage {
     return dumps;
   }
 
-  static createConnectionDump(connectionId: string) {}
+  static async downloadConnectionDump(connectionId: string, dump: string) {
+    const connectionPath = path.join(process.cwd(), "data", connectionId);
 
-  static downloadConnectionDump(connectionId: string, dump: string) {}
+    const buffer = await fsp.readFile(path.join(connectionPath, dump));
+
+    const headers = new Headers();
+
+    headers.append("Content-Disposition", `attachment; filename=${dump}`);
+    headers.append("Content-Type", "application/octet-stream");
+
+    return new Response(buffer, { headers });
+  }
+
+  static deleteConnection(connectionId: string) {}
 
   static deleteConnectionDump(connectionId: string, dump: string) {}
 }

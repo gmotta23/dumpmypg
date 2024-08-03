@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <p className="text-xl mb-4">Name: {connection.name}</p>
         <p className="text-xl mb-4">Host: {connection.host}</p>
         <p className="text-xl mb-4">Port: {connection.port}</p>
-        <DumpList dumps={connectionDumps} />
+        <DumpList connection={connection} dumps={connectionDumps} />
         <DumpButton connection={connection} />
         <Link href="/">
           <div className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">
