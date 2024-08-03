@@ -24,6 +24,7 @@ class Dumper {
     this.ssl = options.ssl ?? false;
   }
   dump() {
+    console.log("starting dump process");
     const { host, port, database, user, password } = this.credentials;
     let script = `/usr/bin/pg_dump --dbname=postgresql://${user}:${password}@${host}:${port}/${database}`;
 

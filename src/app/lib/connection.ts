@@ -28,22 +28,32 @@ class ConnectionStorage {
 
     const connections = [];
 
-    for (const d of directories) {
-      const connectionPath = path.join(
-        process.cwd(),
-        "data",
-        d,
-        this.connectionFile
-      );
-      const connection = JSON.parse(
-        (await fsp.readFile(connectionPath)).toString()
-      );
-      delete connection.password;
-      connection.id = d;
+    for (const connectionId of directories) {
+      const connection = await this.getConnection(connectionId);
       connections.push(connection);
     }
 
     return connections;
+  }
+
+  static async getConnection(
+    connectionId: string,
+    options = { hidePassword: true }
+  ) {
+    const connectionPath = path.join(
+      process.cwd(),
+      "data",
+      connectionId,
+      this.connectionFile
+    );
+    const connection = JSON.parse(
+      (await fsp.readFile(connectionPath)).toString()
+    );
+    if (options.hidePassword) {
+      delete connection.password;
+    }
+    connection.id = connectionId;
+    return connection;
   }
 
   static deleteConnection(connectionId: string) {}

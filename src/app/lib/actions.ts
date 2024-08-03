@@ -51,6 +51,22 @@ export async function getConnections() {
   });
 }
 
-export async function dump(credentials: Credentials) {
-  new Dumper(credentials, { ssl: true }).dump();
+export async function getConnection(connectionId: string) {
+  return await ConnectionStorage.getConnection(connectionId).catch((_) => {
+    throw new Error("Failed to fetch connection data.");
+  });
+}
+
+export async function dump(connectionId: string) {
+  const connection = await ConnectionStorage.getConnection(connectionId, {
+    hidePassword: false,
+  });
+  const credentials = {
+    host: connection.host,
+    port: connection.port,
+    database: connection.database,
+    user: connection.user,
+    password: connection.password,
+  };
+  new Dumper(credentials, { ssl: connection.ssl }).dump();
 }

@@ -37,7 +37,7 @@ export async function ConnectionList() {
               <div className="text-sm leading-5 font-medium text-blue-500 truncate">
                 <Link href={`/connections/${db.id}`}>
                   <div className="text-blue-500 hover:text-indigo-900">
-                    View Connection
+                    View
                   </div>
                 </Link>
               </div>
