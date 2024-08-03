@@ -30,7 +30,7 @@ export async function createConnection(
     database: formData.get("database"),
     user: formData.get("user"),
     password: formData.get("password"),
-    ssl: formData.get("ssl"),
+    ssl: formData.get("ssl") === "on",
   });
 
   if (!validatedFields.success) {
