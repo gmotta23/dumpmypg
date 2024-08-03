@@ -70,3 +70,9 @@ export async function dump(connectionId: string) {
   };
   new Dumper(credentials, connectionId, { ssl: connection.ssl }).dump();
 }
+
+export async function getConnectionDumps(connectionId: string) {
+  return await ConnectionStorage.getConnectionDumps(connectionId).catch((_) => {
+    throw new Error("Failed to fetch connection dumps.");
+  });
+}

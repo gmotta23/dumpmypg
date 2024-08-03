@@ -58,7 +58,15 @@ class ConnectionStorage {
 
   static deleteConnection(connectionId: string) {}
 
-  static getConnectionDumps(connectionId: string) {}
+  static async getConnectionDumps(connectionId: string) {
+    const connectionPath = path.join(process.cwd(), "data", connectionId);
+
+    const dumps = (await fsp.readdir(connectionPath)).filter((file) =>
+      file.endsWith(".dump")
+    );
+
+    return dumps;
+  }
 
   static createConnectionDump(connectionId: string) {}
 
