@@ -68,5 +68,5 @@ export async function dump(connectionId: string) {
     user: connection.user,
     password: connection.password,
   };
-  new Dumper(credentials, { ssl: connection.ssl }).dump();
+  new Dumper(credentials, connectionId, { ssl: connection.ssl }).dump();
 }

@@ -1,7 +1,7 @@
 import { spawn } from "node:child_process";
+import path from "path";
 
 export type Options = {
-  file?: string;
   ssl?: boolean;
 };
 
@@ -15,14 +15,24 @@ export type Credentials = {
 
 class Dumper {
   credentials: Credentials;
-  file: string;
+  connectionPath: string;
   ssl: boolean;
 
-  constructor(credentials: Credentials, options: Options) {
+  constructor(
+    credentials: Credentials,
+    connectionId: string,
+    options: Options
+  ) {
     this.credentials = credentials;
-    this.file = options.file ?? "db.dump";
+    this.connectionPath = this.getConnectionPath(connectionId);
     this.ssl = options.ssl ?? false;
   }
+
+  getConnectionPath(connectionId: string) {
+    const connectionPath = path.join(process.cwd(), "data", connectionId);
+    return connectionPath;
+  }
+
   dump() {
     console.log("starting dump process");
     const { host, port, database, user, password } = this.credentials;
@@ -32,7 +42,12 @@ class Dumper {
       script += "?sslmode=require";
     }
 
-    const dump = spawn(`${script} -f ${this.file}`, {
+    const file = path.join(
+      this.connectionPath,
+      Date.now().toString() + ".dump"
+    );
+
+    const dump = spawn(`${script} -f ${file}`, {
       shell: true,
       stdio: ["inherit", "pipe", "pipe"],
     });
