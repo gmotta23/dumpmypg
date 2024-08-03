@@ -10,11 +10,13 @@ export type FormState = {
 };
 
 const ConnectionSchema = z.object({
+  name: z.string(),
   host: z.string(),
   port: z.string(),
   database: z.string(),
   user: z.string(),
   password: z.string(),
+  ssl: z.boolean(),
 });
 
 export async function createConnection(
@@ -22,11 +24,13 @@ export async function createConnection(
   formData: FormData
 ) {
   const validatedFields = ConnectionSchema.safeParse({
+    name: formData.get("name"),
     host: formData.get("host"),
     port: formData.get("port"),
     database: formData.get("database"),
     user: formData.get("user"),
     password: formData.get("password"),
+    ssl: formData.get("ssl"),
   });
 
   if (!validatedFields.success) {
@@ -35,7 +39,7 @@ export async function createConnection(
     };
   }
 
-  ConnectionStorage.createConnection(validatedFields.data);
+  await ConnectionStorage.createConnection(validatedFields.data);
 
   revalidatePath("/");
   redirect("/");

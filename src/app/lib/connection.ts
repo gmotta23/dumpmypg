@@ -35,8 +35,12 @@ class ConnectionStorage {
         d,
         this.connectionFile
       );
-      const connection = await fsp.readFile(connectionPath);
-      connections.push(JSON.parse(connection.toString()));
+      const connection = JSON.parse(
+        (await fsp.readFile(connectionPath)).toString()
+      );
+      delete connection.password;
+      connection.id = d;
+      connections.push(connection);
     }
 
     return connections;
