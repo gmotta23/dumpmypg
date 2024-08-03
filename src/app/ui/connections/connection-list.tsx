@@ -1,4 +1,4 @@
-import { getConnections } from "@/app/lib/actions";
+import { getConnections } from "@/lib/actions";
 import Link from "next/link";
 
 export async function ConnectionList() {

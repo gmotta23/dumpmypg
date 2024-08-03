@@ -1,6 +1,6 @@
 "use client";
-import { dump } from "@/app/lib/actions";
-import { Connection } from "@/app/lib/definitions";
+import { dump } from "@/lib/actions";
+import { Connection } from "@/lib/definitions";
 import { Button } from "../../button";
 import { useState } from "react";
 

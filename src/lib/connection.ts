@@ -1,5 +1,4 @@
-import fs, { readFile } from "fs";
-import { mkdirSync, readdirSync, writeFileSync } from "fs";
+import fs from "fs";
 import { Connection } from "./definitions";
 import { generateUUID } from "./utils";
 import path from "path";

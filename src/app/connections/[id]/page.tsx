@@ -1,4 +1,4 @@
-import { getConnection, getConnectionDumps } from "@/app/lib/actions";
+import { getConnection, getConnectionDumps } from "@/lib/actions";
 import { DumpButton } from "@/app/ui/connections/connection/dump-button";
 import { DumpList } from "@/app/ui/connections/connection/dump-list";
 import Section from "@/app/ui/display/section";

@@ -1,5 +1,5 @@
 "use client";
-import { FormState, createConnection } from "@/app/lib/actions";
+import { FormState, createConnection } from "@/lib/actions";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { Button } from "../button";

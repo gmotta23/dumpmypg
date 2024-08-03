@@ -1,8 +1,7 @@
-import { getConnections } from "@/app/lib/actions";
 import Link from "next/link";
 import { Button } from "../../button";
 import { DownloadButton } from "./download-button";
-import { Connection } from "@/app/lib/definitions";
+import { Connection } from "@/lib/definitions";
 
 export async function DumpList({
   connection,
