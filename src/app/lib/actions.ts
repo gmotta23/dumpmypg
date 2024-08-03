@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { Credentials, Dumper } from "./dumper";
-import { ConnectionStorage } from "./database";
+import { ConnectionStorage } from "./connection";
 
 export type FormState = {
   message?: string | null;

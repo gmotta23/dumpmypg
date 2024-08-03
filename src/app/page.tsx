@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { ConnectionList } from "./ui/databases/connection-list";
+import { ConnectionList } from "./ui/connections/connection-list";
 
 export default function Home() {
   return (
