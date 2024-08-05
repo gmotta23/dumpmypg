@@ -12,8 +12,8 @@ export default function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="flex justify-center h-screen w-full bg-gray-100">
-      <div className="text-center">
+    <section className="h-screen flex justify-center px-10 w-full bg-gray-100">
+      <div className="text-left">
         {title && <Title title={title} />}
         {children}
       </div>
