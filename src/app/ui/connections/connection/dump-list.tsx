@@ -1,13 +1,11 @@
-import Link from "next/link";
-import { Button } from "../../button";
 import { DownloadButton } from "./download-button";
 import { Connection } from "@/lib/definitions";
 
-export async function DumpList({
+export function DumpList({
   connection,
   dumps,
 }: {
-  connection: Connection;
+  connection: Partial<Connection>;
   dumps: string[];
 }) {
   return (

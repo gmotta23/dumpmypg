@@ -1,5 +1,4 @@
 "use client";
-import { downloadConnectionDump } from "@/lib/actions";
 import { Connection } from "@/lib/definitions";
 import { Button } from "../../button";
 import { useState } from "react";
@@ -8,7 +7,7 @@ export const DownloadButton = ({
   connection,
   dump,
 }: {
-  connection: Connection;
+  connection: Partial<Connection>;
   dump: string;
 }) => {
   const [loading, setLoading] = useState(false);

@@ -76,10 +76,3 @@ export async function getConnectionDumps(connectionId: string) {
     throw new Error("Failed to fetch connection dumps.");
   });
 }
-
-export async function downloadConnectionDump(
-  connectionId: string,
-  dump: string
-) {
-  return await ConnectionStorage.downloadConnectionDump(connectionId, dump);
-}
