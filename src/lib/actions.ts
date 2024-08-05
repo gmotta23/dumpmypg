@@ -2,20 +2,21 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { Credentials, Dumper } from "./dumper";
+import { Dumper } from "./dumper";
 import { ConnectionStorage } from "./connection";
 
 export type FormState = {
+  errors?: Record<string, string[]>;
   message?: string | null;
 };
 
 const ConnectionSchema = z.object({
-  name: z.string(),
-  host: z.string(),
-  port: z.string(),
-  database: z.string(),
-  user: z.string(),
-  password: z.string(),
+  name: z.string().trim(),
+  host: z.string().trim().min(1, { message: "Host cannot be empty" }),
+  port: z.number().min(1, { message: "Port cannot be empty" }),
+  database: z.string().trim().min(1, { message: "Database cannot be empty" }),
+  user: z.string().trim().min(1, { message: "User cannot be empty" }),
+  password: z.string().trim().min(1, { message: "Password cannot be empty" }),
   ssl: z.boolean(),
 });
 
@@ -26,7 +27,7 @@ export async function createConnection(
   const validatedFields = ConnectionSchema.safeParse({
     name: formData.get("name"),
     host: formData.get("host"),
-    port: formData.get("port"),
+    port: parseInt((formData.get("port") as string) ?? "0"),
     database: formData.get("database"),
     user: formData.get("user"),
     password: formData.get("password"),
@@ -35,6 +36,7 @@ export async function createConnection(
 
   if (!validatedFields.success) {
     return {
+      errors: validatedFields.error.flatten().fieldErrors,
       message: "Missing fields",
     };
   }
