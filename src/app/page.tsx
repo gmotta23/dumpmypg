@@ -7,7 +7,7 @@ import Title from "./ui/display/title";
 export default function Home() {
   return (
     <Section>
-      <div className="grid">
+      <div className="grid pb-10">
         <div className="flex items-center justify-between">
           <Title title="Connections" />
           <Link href="/connections/create">

@@ -8,6 +8,7 @@ import { ConnectionStorage } from "./connection";
 export type FormState = {
   errors?: Record<string, string[]>;
   message?: string | null;
+  success?: boolean;
 };
 
 const ConnectionSchema = z.object({
@@ -38,13 +39,13 @@ export async function createConnection(
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: "Missing fields",
+      success: false,
     };
   }
 
   await ConnectionStorage.createConnection(validatedFields.data);
 
-  revalidatePath("/");
-  redirect("/");
+  return { success: true };
 }
 
 export async function getConnections() {

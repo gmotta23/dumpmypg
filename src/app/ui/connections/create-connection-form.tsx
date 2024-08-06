@@ -3,10 +3,24 @@ import { FormState, createConnection } from "@/lib/actions";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { Button } from "../button";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { redirect } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Form() {
-  const initialState: FormState = { message: null, errors: {} };
+  const initialState: FormState = { message: null, errors: {}, success: false };
+
   const [state, formAction] = useFormState(createConnection, initialState);
+
+  const notify = () => toast("Connection created successfully!");
+
+  useEffect(() => {
+    if (state.success) {
+      notify();
+      redirect("/");
+    }
+  }, [state.success]);
 
   return (
     <form action={formAction}>
