@@ -34,8 +34,7 @@ class Dumper {
   }
 
   async dump() {
-    console.log("starting dump process");
-    await new Promise((resolve) => {
+    await new Promise((resolve, reject) => {
       const { host, port, database, user, password } = this.credentials;
       let script = `/usr/bin/pg_dump --dbname=postgresql://${user}:${password}@${host}:${port}/${database}`;
 
@@ -50,14 +49,19 @@ class Dumper {
 
       const dump = spawn(`${script} -f ${file}`, {
         shell: true,
-        stdio: ["inherit", "pipe", "pipe"],
+        stdio: ["inherit", "inherit", "pipe"],
       });
 
-      dump.stderr.on("data", (err) => console.error(err.toString()));
+      dump.stderr.on("data", (err) => {
+        dump.emit("close", err.toString());
+      });
 
-      dump.on("close", (code) => {
-        console.log(`child process exited with code ${code}`);
-        resolve(code);
+      dump.on("close", (codeOrErrorMessage: number | string) => {
+        if (codeOrErrorMessage === 0) {
+          resolve(0);
+        } else {
+          reject({ message: codeOrErrorMessage });
+        }
       });
     });
   }

@@ -3,6 +3,8 @@ import { dump } from "@/lib/actions";
 import { Connection } from "@/lib/definitions";
 import { Button } from "../../button";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const DumpButton = ({
   connection,
@@ -17,15 +19,21 @@ export const DumpButton = ({
     setLoading(true);
     try {
       if (connection && connection.id) {
-        await dump(connection.id);
-        if (onDump) {
-          onDump();
+        const result = await dump(connection.id);
+
+        if (!result.success) {
+          toast(result.message, { type: "error" });
+        } else {
+          toast("Dumped successfully", { type: "success" });
         }
       }
     } catch (error) {
-      console.error(error);
+      alert(error);
     } finally {
       setLoading(false);
+      if (onDump) {
+        onDump();
+      }
     }
   };
 

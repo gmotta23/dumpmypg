@@ -12,7 +12,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const [connection, setConnection] = useState({
     name: "",
     host: "",
-    port: "",
+    port: undefined,
     database: "",
     user: "",
   });
