@@ -1,4 +1,3 @@
-import { getConnections } from "@/lib/actions";
 import Link from "next/link";
 import {
   ArrowTopRightOnSquareIcon,
@@ -8,9 +7,9 @@ import {
 } from "@heroicons/react/24/solid";
 import React from "react";
 import { ListContainer } from "../list-container";
+import { Connection } from "@/lib/definitions";
 
-export async function ConnectionList() {
-  const connections = await getConnections();
+export function ConnectionList({ connections }: { connections: Connection[] }) {
   return (
     <ListContainer className="h-[calc(100vh_-_15rem)]">
       <ul>

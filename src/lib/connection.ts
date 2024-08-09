@@ -8,10 +8,11 @@ const fsp = fs.promises;
 
 class ConnectionStorage {
   static connectionFile = "connection.json";
-  static async createConnection(connection: Connection) {
-    const uuid = generateUUID();
 
-    const connectionPath = path.join(process.cwd(), "data", uuid);
+  static async createConnection(connection: Connection) {
+    const key = Date.now() + "_" + generateUUID();
+
+    const connectionPath = path.join(process.cwd(), "data", key);
 
     await fsp.mkdir(connectionPath);
 
@@ -26,14 +27,11 @@ class ConnectionStorage {
 
     const directories = await fsp.readdir(connectionsPath);
 
-    const connections = [];
+    const loadConnection = (connectionId: string) => {
+      return this.getConnection(connectionId);
+    };
 
-    for (const connectionId of directories) {
-      const connection = await this.getConnection(connectionId);
-      connections.push(connection);
-    }
-
-    return connections;
+    return Promise.all(directories.map(loadConnection));
   }
 
   static async getConnection(

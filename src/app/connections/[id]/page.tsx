@@ -28,8 +28,6 @@ export default function Page({ params }: { params: { id: string } }) {
         getConnection(id),
         getConnectionDumps(id),
       ]);
-
-      console.log(connectionDumps);
       setConnection(connection);
       setConnectionDumps(connectionDumps);
     }

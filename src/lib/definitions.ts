@@ -6,6 +6,7 @@ export type Connection = {
   database: string;
   user: string;
   password: string;
+  ssl: boolean;
 };
 
 export type Dump = {
