@@ -7,3 +7,9 @@ export type Connection = {
   user: string;
   password: string;
 };
+
+export type Dump = {
+  name: string;
+  createdAt: Date;
+  size: string;
+};

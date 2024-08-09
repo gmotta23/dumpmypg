@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { ConnectionGrid } from "@/app/ui/connections/connection/connection-grid";
 import Title from "@/app/ui/display/title";
 import { Button } from "@/app/ui/button";
+import { Dump } from "@/lib/definitions";
 
 export default function Page({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -19,7 +20,7 @@ export default function Page({ params }: { params: { id: string } }) {
     database: "",
     user: "",
   });
-  const [connectionDumps, setConnectionDumps] = useState<string[]>([]);
+  const [connectionDumps, setConnectionDumps] = useState<Dump[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -28,9 +29,9 @@ export default function Page({ params }: { params: { id: string } }) {
         getConnectionDumps(id),
       ]);
 
-      console.log(connection);
+      console.log(connectionDumps);
       setConnection(connection);
-      setConnectionDumps(connectionDumps.concat(connectionDumps));
+      setConnectionDumps(connectionDumps);
     }
     fetchData();
   }, [id, refresh]);

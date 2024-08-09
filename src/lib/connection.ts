@@ -1,4 +1,5 @@
 import fs from "fs";
+import prettyBytes from "pretty-bytes";
 import { Connection } from "./definitions";
 import { generateUUID } from "./utils";
 import path from "path";
@@ -58,11 +59,29 @@ class ConnectionStorage {
   static async getConnectionDumps(connectionId: string) {
     const connectionPath = path.join(process.cwd(), "data", connectionId);
 
-    const dumps = (await fsp.readdir(connectionPath)).filter((file) =>
-      file.endsWith(".dump")
-    );
+    const dumpNames = (await fsp.readdir(connectionPath))
+      .filter((file) => file.endsWith(".dump"))
+      .reverse();
 
-    return dumps;
+    const loadFileContent = async (dumpPath: string) => {
+      const stats = await fsp.stat(dumpPath);
+
+      if (!stats.isFile()) {
+        throw new Error("Invalid dump file");
+      }
+
+      return {
+        name: path.basename(dumpPath),
+        size: prettyBytes(stats.size),
+        createdAt: stats.birthtime,
+      };
+    };
+
+    return Promise.all(
+      dumpNames.map((dumpName: string) => {
+        return loadFileContent(path.join(connectionPath, dumpName));
+      })
+    );
   }
 
   static async downloadConnectionDump(connectionId: string, dump: string) {
