@@ -5,6 +5,7 @@ import { DumpList } from "@/app/ui/connections/connection/dump-list";
 import Section from "@/app/ui/display/section";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ConnectionGrid } from "@/app/ui/connections/connection/connection-grid";
 
 export default function Page({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -24,6 +25,7 @@ export default function Page({ params }: { params: { id: string } }) {
         getConnection(id),
         getConnectionDumps(id),
       ]);
+      console.log(connection);
       setConnection(connection);
       setConnectionDumps(connectionDumps);
     }
@@ -31,12 +33,9 @@ export default function Page({ params }: { params: { id: string } }) {
   }, [id, refresh]);
 
   return (
-    <Section title="Connection">
+    <Section title={`Connection ${connection.name}`}>
       <div className="text-center">
-        <p className="text-xl mb-4">ID: {id}</p>
-        <p className="text-xl mb-4">Name: {connection.name}</p>
-        <p className="text-xl mb-4">Host: {connection.host}</p>
-        <p className="text-xl mb-4">Port: {connection.port}</p>
+        <ConnectionGrid connection={connection} />
         <DumpList connection={connection} dumps={connectionDumps} />
         <DumpButton
           connection={connection}

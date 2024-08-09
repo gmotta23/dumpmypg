@@ -1,6 +1,5 @@
 "use client";
 import { Connection } from "@/lib/definitions";
-import { Button } from "../../button";
 import { useState } from "react";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/solid";
 
