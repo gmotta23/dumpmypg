@@ -2,6 +2,7 @@
 import { Connection } from "@/lib/definitions";
 import { Button } from "../../button";
 import { useState } from "react";
+import { ArrowDownTrayIcon } from "@heroicons/react/24/solid";
 
 export const DownloadButton = ({
   connection,
@@ -42,8 +43,10 @@ export const DownloadButton = ({
   };
 
   return (
-    <Button disabled={!connection} onClick={handleDownload}>
-      {loading ? "Loading" : "Download"}
-    </Button>
+    <ArrowDownTrayIcon
+      onClick={handleDownload}
+      aria-disabled={loading}
+      className="h-6 w-6 cursor-pointer"
+    />
   );
 };

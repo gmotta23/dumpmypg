@@ -4,14 +4,15 @@ import {
   ArrowTopRightOnSquareIcon,
   TrashIcon,
   NoSymbolIcon,
-  CheckIcon,
   CheckBadgeIcon,
 } from "@heroicons/react/24/solid";
+import React from "react";
+import { ListContainer } from "../list-container";
 
 export async function ConnectionList() {
   const connections = await getConnections();
   return (
-    <div className="text-left bg-white shadow overflow-hidden sm:rounded-md w-[calc(100vw_-_10rem)]">
+    <ListContainer>
       <ul>
         <li className="border-t border-gray-200">
           <div className="grid grid-cols-[20%_30%_10%_15%_10%_15%] gap-4 px-4 py-4 sm:px-6 font-bold">
@@ -62,6 +63,6 @@ export async function ConnectionList() {
           </li>
         ))}
       </ul>
-    </div>
+    </ListContainer>
   );
 }

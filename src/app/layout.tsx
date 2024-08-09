@@ -19,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={clsx("h-screen bg-gray-100", inter.className)}>
+      <body
+        className={clsx("h-screen max-h-[100vw] bg-gray-100", inter.className)}
+      >
         <Header />
         <ToastContainer />
         {children}
