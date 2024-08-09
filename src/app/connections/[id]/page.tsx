@@ -6,6 +6,8 @@ import Section from "@/app/ui/display/section";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ConnectionGrid } from "@/app/ui/connections/connection/connection-grid";
+import Title from "@/app/ui/display/title";
+import { Button } from "@/app/ui/button";
 
 export default function Page({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -25,27 +27,33 @@ export default function Page({ params }: { params: { id: string } }) {
         getConnection(id),
         getConnectionDumps(id),
       ]);
+
       console.log(connection);
       setConnection(connection);
-      setConnectionDumps(connectionDumps);
+      setConnectionDumps(connectionDumps.concat(connectionDumps));
     }
     fetchData();
   }, [id, refresh]);
 
   return (
-    <Section title={`Connection ${connection.name}`}>
+    <Section>
+      <div className="flex items-center justify-between">
+        <div className="flex">
+          <Title title={`Connection ${connection.name}`} />
+        </div>
+        <div className="flex gap-3">
+          <DumpButton
+            connection={connection}
+            onDump={() => setRefresh(!refresh)}
+          />
+          <Link href="/">
+            <Button>Go Back</Button>
+          </Link>
+        </div>
+      </div>
       <div className="text-center">
         <ConnectionGrid connection={connection} />
         <DumpList connection={connection} dumps={connectionDumps} />
-        <DumpButton
-          connection={connection}
-          onDump={() => setRefresh(!refresh)}
-        />
-        <Link href="/">
-          <div className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">
-            Go Back
-          </div>
-        </Link>
       </div>
     </Section>
   );

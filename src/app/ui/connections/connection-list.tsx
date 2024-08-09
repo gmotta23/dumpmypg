@@ -12,7 +12,7 @@ import { ListContainer } from "../list-container";
 export async function ConnectionList() {
   const connections = await getConnections();
   return (
-    <ListContainer>
+    <ListContainer className="h-[calc(100vh_-_15rem)]">
       <ul>
         <li className="border-t border-gray-200">
           <div className="grid grid-cols-[20%_30%_10%_15%_10%_15%] gap-4 px-4 py-4 sm:px-6 font-bold">

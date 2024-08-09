@@ -11,7 +11,7 @@ export function DumpList({
   dumps: string[];
 }) {
   return (
-    <ListContainer>
+    <ListContainer className="h-[calc(100vh_-_20rem)]">
       <ul>
         <li className="border-t border-gray-200">
           <div className="grid grid-cols-2 gap-4 px-4 py-4 sm:px-6 font-bold">
