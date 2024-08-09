@@ -8,8 +8,15 @@ import {
 import React from "react";
 import { ListContainer } from "../list-container";
 import { Connection } from "@/lib/definitions";
+import { DeleteConnectionButton } from "./delete-connection-button";
 
-export function ConnectionList({ connections }: { connections: Connection[] }) {
+export function ConnectionList({
+  connections,
+  onDelete,
+}: {
+  connections: Connection[];
+  onDelete: () => void;
+}) {
   return (
     <ListContainer className="h-[calc(100vh_-_15rem)]">
       <ul>
@@ -55,7 +62,10 @@ export function ConnectionList({ connections }: { connections: Connection[] }) {
                   <Link href={`/connections/${db.id}`}>
                     <ArrowTopRightOnSquareIcon className="h-6 w-6" />
                   </Link>
-                  <TrashIcon className="h-6 w-6" />
+                  <DeleteConnectionButton
+                    connectionId={db.id as string}
+                    onDelete={onDelete}
+                  />
                 </div>
               </div>
             </div>

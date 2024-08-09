@@ -10,6 +10,7 @@ import { getConnections } from "@/lib/actions";
 
 export default function Home() {
   const [connections, setConnections] = useState<Connection[]>([]);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -17,7 +18,7 @@ export default function Home() {
       setConnections(connections);
     }
     fetchData();
-  }, []);
+  }, [refresh]);
 
   return (
     <Section>
@@ -28,7 +29,10 @@ export default function Home() {
             <Button>Create new connection</Button>
           </Link>
         </div>
-        <ConnectionList connections={connections} />
+        <ConnectionList
+          connections={connections}
+          onDelete={() => setRefresh(!refresh)}
+        />
       </div>
     </Section>
   );

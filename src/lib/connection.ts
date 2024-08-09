@@ -95,7 +95,11 @@ class ConnectionStorage {
     return new Response(buffer, { headers });
   }
 
-  static deleteConnection(connectionId: string) {}
+  static deleteConnection(connectionId: string) {
+    const connectionPath = path.join(process.cwd(), "data", connectionId);
+
+    return fsp.rmdir(connectionPath, { recursive: true });
+  }
 
   static async deleteConnectionDump(connectionId: string, dump: string) {
     const connectionPath = path.join(process.cwd(), "data", connectionId);

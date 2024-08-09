@@ -95,3 +95,9 @@ export async function deleteConnectionDump(connectionId: string, dump: string) {
     }
   );
 }
+
+export async function deleteConnection(connectionId: string) {
+  return await ConnectionStorage.deleteConnection(connectionId).catch((_) => {
+    throw new Error("Failed to delete connection.");
+  });
+}
