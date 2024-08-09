@@ -1,14 +1,16 @@
-import { TrashIcon } from "@heroicons/react/24/solid";
 import { ListContainer } from "../../list-container";
 import { DownloadButton } from "./download-button";
 import { Connection, Dump } from "@/lib/definitions";
+import { DeleteDumpButton } from "./delete-dump-button";
 
 export function DumpList({
   connection,
   dumps,
+  onDelete,
 }: {
   connection: Partial<Connection>;
   dumps: Dump[];
+  onDelete: () => void;
 }) {
   return (
     <ListContainer className="h-[calc(100vh_-_20rem)]">
@@ -39,7 +41,11 @@ export function DumpList({
               </div>
               <div className="flex gap-3 text-sm leading-5 font-medium text-blue-500 truncate">
                 <DownloadButton connection={connection} dump={dump.name} />
-                <TrashIcon className="h-6 w-6 cursor-pointer" />
+                <DeleteDumpButton
+                  connection={connection}
+                  dump={dump.name}
+                  onDelete={onDelete}
+                />
               </div>
             </div>
           </li>

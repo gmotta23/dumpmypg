@@ -52,7 +52,11 @@ export default function Page({ params }: { params: { id: string } }) {
       </div>
       <div className="text-center">
         <ConnectionGrid connection={connection} />
-        <DumpList connection={connection} dumps={connectionDumps} />
+        <DumpList
+          connection={connection}
+          dumps={connectionDumps}
+          onDelete={() => setRefresh(!refresh)}
+        />
       </div>
     </Section>
   );

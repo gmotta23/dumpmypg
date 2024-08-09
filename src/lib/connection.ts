@@ -97,7 +97,11 @@ class ConnectionStorage {
 
   static deleteConnection(connectionId: string) {}
 
-  static deleteConnectionDump(connectionId: string, dump: string) {}
+  static async deleteConnectionDump(connectionId: string, dump: string) {
+    const connectionPath = path.join(process.cwd(), "data", connectionId);
+
+    await fsp.unlink(path.join(connectionPath, dump));
+  }
 }
 
 export { ConnectionStorage };
