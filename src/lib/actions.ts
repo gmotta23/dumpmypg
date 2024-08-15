@@ -90,7 +90,6 @@ export async function getConnectionDumps(connectionId: string) {
 export async function deleteConnectionDump(connectionId: string, dump: string) {
   return await ConnectionStorage.deleteConnectionDump(connectionId, dump).catch(
     (_) => {
-      console.log(_);
       throw new Error("Failed to delete connection dump.");
     }
   );

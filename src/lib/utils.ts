@@ -3,16 +3,17 @@ import { Connection } from "./definitions";
 
 export const formatScript = (
   credentials: Partial<Connection>,
-  hidePassword = false
+  isPreview = false
 ) => {
   const { host, port, database, user, ssl } = credentials;
   let { password } = credentials;
+  let caller = isPreview ? "pg_dump" : "/usr/bin/pg_dump";
 
-  if (hidePassword) {
+  if (isPreview) {
     password = "{password}";
   }
 
-  let script = `/usr/bin/pg_dump --dbname=postgresql://${user}:${password}@${host}:${port}/${database}`;
+  let script = `${caller} --dbname=postgresql://${user}:${password}@${host}:${port}/${database}`;
 
   if (ssl) {
     script += "?sslmode=require";

@@ -4,7 +4,9 @@ import Section from "@/app/ui/display/section";
 export default function Page() {
   return (
     <Section title="Create database connection">
-      <Form />
+      <div className="container w-screen">
+        <Form />
+      </div>
     </Section>
   );
 }

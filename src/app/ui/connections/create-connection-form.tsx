@@ -10,6 +10,23 @@ import { useEffect, useState } from "react";
 import { formatScript } from "@/lib/utils";
 import { Connection } from "@/lib/definitions";
 
+const PreviewScript = ({ previewScript }: { previewScript: string }) => {
+  return (
+    <div className="bg-gray-800 p-4">
+      <div className="">
+        <div className="grid gap-4 text-white">
+          <div className="text-md font-bold">Dump Command Preview</div>
+          <div className="text-sm">
+            {previewScript.length
+              ? `Command: ${previewScript}`
+              : "Not enough data"}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function Form() {
   const initialState: FormState = { message: null, errors: {}, success: false };
 
@@ -29,7 +46,15 @@ export default function Form() {
   const notify = () => toast("Connection created successfully!");
 
   useEffect(() => {
-    setPreviewScript(formatScript(previewConnection, true));
+    const noEmptyFields = Object.values(previewConnection).every(
+      (v) => v !== ""
+    );
+
+    if (noEmptyFields) {
+      setPreviewScript(formatScript(previewConnection, true));
+    } else {
+      setPreviewScript("");
+    }
   }, [previewConnection]);
 
   useEffect(() => {
@@ -41,6 +66,7 @@ export default function Form() {
 
   return (
     <form action={formAction}>
+      <PreviewScript previewScript={previewScript} />
       <div className="bg-gray-50 p-4 md:p-6">
         <div className="mb-4">
           <div className="flex items-center">
@@ -234,13 +260,13 @@ export default function Form() {
               htmlFor="ssl"
               className="text-left mb-2 text-sm font-medium w-32"
             >
-              Require SSL
+              Requires SSL
             </label>
             <input
               id="ssl"
               name="ssl"
               type="checkbox"
-              className="cursor-pointer rounded-md border border-gray-200 py-2 ml-3 pl-3 text-sm outline-2 placeholder:text-gray-500 flex-1"
+              className="cursor-pointer rounded-md border border-gray-200 py-2 ml-3 pl-3 text-sm outline-2 placeholder:text-gray-500"
               onChange={(e) =>
                 setPreviewConnection({
                   ...previewConnection,
@@ -258,7 +284,6 @@ export default function Form() {
               ))}
           </div>
         </div>
-        <div className="mb-4">{previewScript}</div>
 
         <div className="mt-6 flex justify-end gap-4">
           <Link
