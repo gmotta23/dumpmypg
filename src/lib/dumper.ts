@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import path from "path";
+import { formatScript } from "./utils";
 
 export type Options = {
   ssl?: boolean;
@@ -7,7 +8,7 @@ export type Options = {
 
 export type Credentials = {
   host: string;
-  port: string;
+  port: number;
   database: string;
   user: string;
   password: string;
@@ -35,12 +36,7 @@ class Dumper {
 
   async dump() {
     await new Promise((resolve, reject) => {
-      const { host, port, database, user, password } = this.credentials;
-      let script = `/usr/bin/pg_dump --dbname=postgresql://${user}:${password}@${host}:${port}/${database}`;
-
-      if (this.ssl) {
-        script += "?sslmode=require";
-      }
+      const script = formatScript(this.credentials);
 
       const file = path.join(
         this.connectionPath,
