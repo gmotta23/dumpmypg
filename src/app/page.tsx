@@ -9,7 +9,7 @@ import { Connection } from "@/lib/definitions";
 import { getConnections } from "@/lib/actions";
 
 export default function Home() {
-  const [connections, setConnections] = useState<Connection[]>([]);
+  const [connections, setConnections] = useState<Partial<Connection>[]>([]);
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {

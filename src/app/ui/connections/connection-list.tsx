@@ -14,7 +14,7 @@ export function ConnectionList({
   connections,
   onDelete,
 }: {
-  connections: Connection[];
+  connections: Partial<Connection>[];
   onDelete: () => void;
 }) {
   return (
