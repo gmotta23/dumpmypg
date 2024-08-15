@@ -17,6 +17,7 @@ const ConnectionSchema = z.object({
   user: z.string().trim().min(1, { message: "User cannot be empty" }),
   password: z.string().trim().min(1, { message: "Password cannot be empty" }),
   ssl: z.boolean(),
+  customOptions: z.string().trim(),
 });
 
 export async function createConnection(
@@ -31,6 +32,7 @@ export async function createConnection(
     user: formData.get("user"),
     password: formData.get("password"),
     ssl: formData.get("ssl") === "on",
+    customOptions: formData.get("customOptions"),
   });
 
   if (!validatedFields.success) {
@@ -68,12 +70,12 @@ export async function dump(connectionId: string) {
     database: connection.database,
     user: connection.user,
     password: connection.password,
+    ssl: connection.ssl,
+    customOptions: connection.customOptions,
   };
 
   try {
-    await new Dumper(credentials, connectionId, {
-      ssl: connection.ssl,
-    }).dump();
+    await new Dumper(credentials, connectionId).dump();
 
     return { success: true, message: "Dumped successfully" };
   } catch (error: unknown) {

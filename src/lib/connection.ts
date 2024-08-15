@@ -46,7 +46,7 @@ class ConnectionStorage {
     );
     const connection = JSON.parse(
       (await fsp.readFile(connectionPath)).toString()
-    );
+    ) as Partial<Connection>;
     if (options.hidePassword) {
       delete connection.password;
     }

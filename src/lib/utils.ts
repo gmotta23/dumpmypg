@@ -5,7 +5,7 @@ export const formatScript = (
   credentials: Partial<Connection>,
   isPreview = false
 ) => {
-  const { host, port, database, user, ssl } = credentials;
+  const { host, port, database, user, ssl, customOptions } = credentials;
   let { password } = credentials;
   let caller = isPreview ? "pg_dump" : "/usr/bin/pg_dump";
 
@@ -13,7 +13,9 @@ export const formatScript = (
     password = "{password}";
   }
 
-  let script = `${caller} --dbname=postgresql://${user}:${password}@${host}:${port}/${database}`;
+  let script = `${caller} ${
+    customOptions ?? ""
+  } --dbname=postgresql://${user}:${password}@${host}:${port}/${database}`;
 
   if (ssl) {
     script += "?sslmode=require";

@@ -7,6 +7,7 @@ export type Connection = {
   user: string;
   password: string;
   ssl: boolean;
+  customOptions?: string;
 };
 
 export type Dump = {

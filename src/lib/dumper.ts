@@ -1,32 +1,15 @@
 import { spawn } from "node:child_process";
 import path from "path";
 import { formatScript } from "./utils";
-
-export type Options = {
-  ssl?: boolean;
-};
-
-export type Credentials = {
-  host: string;
-  port: number;
-  database: string;
-  user: string;
-  password: string;
-};
+import { Connection } from "./definitions";
 
 class Dumper {
-  credentials: Credentials;
+  credentials: Partial<Connection>;
   connectionPath: string;
-  ssl: boolean;
 
-  constructor(
-    credentials: Credentials,
-    connectionId: string,
-    options: Options
-  ) {
+  constructor(credentials: Partial<Connection>, connectionId: string) {
     this.credentials = credentials;
     this.connectionPath = this.getConnectionPath(connectionId);
-    this.ssl = options.ssl ?? false;
   }
 
   getConnectionPath(connectionId: string) {
