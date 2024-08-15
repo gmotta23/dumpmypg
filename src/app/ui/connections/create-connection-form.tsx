@@ -6,14 +6,31 @@ import { Button } from "../button";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { formatScript } from "@/lib/utils";
+import { Connection } from "@/lib/definitions";
 
 export default function Form() {
   const initialState: FormState = { message: null, errors: {}, success: false };
 
   const [state, formAction] = useFormState(createConnection, initialState);
+  const [previewConnection, setPreviewConnection] = useState<
+    Partial<Connection>
+  >({
+    host: "",
+    port: undefined,
+    database: "",
+    user: "",
+    password: "",
+    ssl: false,
+  });
+  const [previewScript, setPreviewScript] = useState("");
 
   const notify = () => toast("Connection created successfully!");
+
+  useEffect(() => {
+    setPreviewScript(formatScript(previewConnection, true));
+  }, [previewConnection]);
 
   useEffect(() => {
     if (state.success) {
@@ -65,6 +82,12 @@ export default function Form() {
               type="text"
               placeholder="Host"
               className="cursor-pointer rounded-md border border-gray-200 py-2 ml-3 pl-3 text-sm outline-2 placeholder:text-gray-500 flex-1"
+              onChange={(e) =>
+                setPreviewConnection({
+                  ...previewConnection,
+                  host: e.target.value,
+                })
+              }
             />
           </div>
           <div className="pt-2">
@@ -91,6 +114,12 @@ export default function Form() {
               type="number"
               placeholder="Port"
               className="cursor-pointer rounded-md border border-gray-200 py-2 ml-3 pl-3 text-sm outline-2 placeholder:text-gray-500 flex-1"
+              onChange={(e) =>
+                setPreviewConnection({
+                  ...previewConnection,
+                  port: parseInt(e.target.value),
+                })
+              }
             />
           </div>
           <div className="pt-2">
@@ -117,6 +146,12 @@ export default function Form() {
               type="text"
               placeholder="Database"
               className="cursor-pointer rounded-md border border-gray-200 py-2 ml-3 pl-3 text-sm outline-2 placeholder:text-gray-500 flex-1"
+              onChange={(e) =>
+                setPreviewConnection({
+                  ...previewConnection,
+                  database: e.target.value,
+                })
+              }
             />
           </div>
           <div className="pt-2">
@@ -143,6 +178,12 @@ export default function Form() {
               type="text"
               placeholder="User"
               className="cursor-pointer rounded-md border border-gray-200 py-2 ml-3 pl-3 text-sm outline-2 placeholder:text-gray-500 flex-1"
+              onChange={(e) =>
+                setPreviewConnection({
+                  ...previewConnection,
+                  user: e.target.value,
+                })
+              }
             />
           </div>
           <div className="pt-2">
@@ -169,6 +210,12 @@ export default function Form() {
               type="password"
               placeholder="Password"
               className="cursor-pointer rounded-md border border-gray-200 py-2 ml-3 pl-3 text-sm outline-2 placeholder:text-gray-500 flex-1"
+              onChange={(e) =>
+                setPreviewConnection({
+                  ...previewConnection,
+                  password: e.target.value,
+                })
+              }
             />
           </div>
           <div className="pt-2">
@@ -194,6 +241,12 @@ export default function Form() {
               name="ssl"
               type="checkbox"
               className="cursor-pointer rounded-md border border-gray-200 py-2 ml-3 pl-3 text-sm outline-2 placeholder:text-gray-500 flex-1"
+              onChange={(e) =>
+                setPreviewConnection({
+                  ...previewConnection,
+                  ssl: e.target.checked,
+                })
+              }
             />
           </div>
           <div className="pt-2">
@@ -205,6 +258,7 @@ export default function Form() {
               ))}
           </div>
         </div>
+        <div className="mb-4">{previewScript}</div>
 
         <div className="mt-6 flex justify-end gap-4">
           <Link
