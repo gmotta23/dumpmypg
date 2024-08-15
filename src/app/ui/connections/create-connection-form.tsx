@@ -48,7 +48,9 @@ export default function Form() {
   useEffect(() => {
     const noEmptyFields = Object.keys(previewConnection)
       .filter((k) => k !== "customOptions" && k !== "ssl")
-      .every((k) => (previewConnection as { [key: string]: any })[k] !== "");
+      .every(
+        (k) => (previewConnection as { [key: string]: unknown })[k] !== ""
+      );
 
     if (noEmptyFields) {
       setPreviewScript(formatScript(previewConnection, true));
