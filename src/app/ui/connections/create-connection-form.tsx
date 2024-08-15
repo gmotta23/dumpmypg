@@ -46,8 +46,9 @@ export default function Form() {
   const notify = () => toast("Connection created successfully!");
 
   useEffect(() => {
+    const emptiableFields = ["customOptions", "ssl"];
     const noEmptyFields = Object.keys(previewConnection)
-      .filter((k) => k !== "customOptions" && k !== "ssl")
+      .filter((k) => !emptiableFields.includes(k))
       .every(
         (k) => (previewConnection as { [key: string]: unknown })[k] !== ""
       );
